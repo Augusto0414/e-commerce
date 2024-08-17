@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import { HomeIcon, Truck, Package, Warehouse, UserIcon } from "lucide-react";
+import { HomeIcon, Truck, Package, Warehouse, UserIcon, Tag, LayoutPanelLeft, ShoppingBasket } from "lucide-react";
 import { SidebarProvider } from '../common/sidebar/context/SidebarContext';
 import Sidebar from '../common/sidebar/Sidebar';
 import SidebarItem from '../common/sidebar/SidebarItem';
@@ -16,9 +16,24 @@ const Layout = () => {
                             href="/"
                         />
                         <SidebarItem
+                            icon={<ShoppingBasket />}
+                            text="Produto"
+                            href="/producto"
+                        />
+                        <SidebarItem
                             icon={<Truck />}
                             text="Pedido"
                             href="/pedido"
+                        />
+                        <SidebarItem
+                            icon={<LayoutPanelLeft />}
+                            text="Categoria"
+                            href="/category"
+                        />
+                        <SidebarItem
+                            icon={<Tag />}
+                            text="Descuento"
+                            href="/descuento"
                         />
                         <SidebarItem
                             icon={<Package />}

@@ -2,6 +2,7 @@ import { ArrowDown, ArrowUp } from 'lucide-react'
 import React from 'react'
 import { TableColumn } from 'react-data-table-component';
 import TableView from '../../components/table/TableView';
+import { Input } from '../../components';
 
 
 interface DataRow {
@@ -89,12 +90,8 @@ const OrderPage: React.FC = () => {
                     </button>
                 </div>
             </header>
-            <div className='my-4 p-4'>
-                <input
-                    type="search"
-                    placeholder='Buscar pedido...'
-                    className='p-2 w-full md:w-1/2 rounded-lg border border-gray-500 focus:border-gray-500 focus:ring-2 focus:ring-gray-500 transition-colors duration-300'
-                />
+            <div className='my-4 p-4 md:w-1/2'>
+                <Input type="search" placeholder="Buscar pedido..." />
             </div>
             <article className='my-4'>
                 <TableView data={data} columns={columns} />
