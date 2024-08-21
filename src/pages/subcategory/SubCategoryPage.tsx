@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { DataTable, Input, Label, ShowDialog } from '../../components'
 
-const CategoryPage: React.FC = () => {
+const SubCategoryPage: React.FC = () => {
     const [dataT, setData] = useState<Array<Record<string, any>>>([]);
     const [isopenDialog, setIsopenDialog] = useState<boolean>(false);
 
@@ -31,15 +31,15 @@ const CategoryPage: React.FC = () => {
     return (
         <>
             <header className='flex justify-between px-4 items-center'>
-                <h1 className='text-dark-blue text-2xl'>Categorias</h1>
+                <h1 className='text-dark-blue text-2xl'>Subcategorias</h1>
                 <div className='flex items-center justify-center'>
-                    <button onClick={() => handleOpenDialog()} className='bg-dark-blue px-4 py-2 mr-4 text-white rounded-lg' >Añadir categoria</button>
+                    <button onClick={() => handleOpenDialog()} className='bg-dark-blue px-4 py-2 mr-4 text-white rounded-lg' >Añadir Subcategorias</button>
                 </div>
             </header>
             <section className='w-full px-2'>
                 <article className='p-4 '>
                     <div className='w-1/2 my-4'>
-                        <Input type='search' placeholder='Buscar categoria...' />
+                        <Input type='search' placeholder='Buscar subcategoria...' />
                     </div>
                     <DataTable columns={columns} data={data} onEdit={handleEdit} onDelete={handleDelete} />
                 </article>
@@ -47,14 +47,14 @@ const CategoryPage: React.FC = () => {
             <ShowDialog
                 isOpen={isopenDialog}
                 onClose={handleCloseDialog}
-                title='Añadir categoria'
+                title='Añadir Subcategorias'
                 children={
                     <form action=''>
                         <div className='grid grid-cols-1 gap-4'>
                             <div className='md:col-span-3 p-2'>
-                                <Label htmlFor="categoria">
-                                    Nombre de la categoria
-                                    <Input type="text" name='categoria' id='categoria' placeholder="Ej: Hogar" />
+                                <Label htmlFor="subcategorias">
+                                    Nombre de la Subcategorias
+                                    <Input type="text" name='subcategorias' id='subcategorias' placeholder="Ej: Hogar" />
                                 </Label>
                             </div>
                         </div>
@@ -68,4 +68,4 @@ const CategoryPage: React.FC = () => {
     )
 }
 
-export default CategoryPage
+export default SubCategoryPage

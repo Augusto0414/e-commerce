@@ -17,7 +17,7 @@ const Layout = () => {
                         />
                         <SidebarItem
                             icon={<ShoppingBasket />}
-                            text="Produto"
+                            text="Producto"
                             href="/producto"
                         />
                         <SidebarItem
@@ -27,8 +27,11 @@ const Layout = () => {
                         />
                         <SidebarItem
                             icon={<LayoutPanelLeft />}
-                            text="Categoria"
+                            text="Categoría"
                             href="/category"
+                            subItems={[
+                                { text: "Añadir Sub categoría", href: "/category/subcategory" }
+                            ]}
                         />
                         <SidebarItem
                             icon={<Tag />}

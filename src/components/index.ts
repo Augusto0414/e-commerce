@@ -6,3 +6,4 @@ export { default as ComboBox } from "./common/ComboBox";
 export { default as ShowDialog } from "./common/ShowDialog";
 export { default as ImageUploader } from "./ImageUploader";
 export { default as DataTable } from "./table/DataTable";
+export { default as ItemOutlet } from "./common/ItemOutlet";
