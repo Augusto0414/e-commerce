@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from '../pages/home/Home';
 import Layout from '../components/layout/layout';
 import OrderPage from '../pages/order/OrderPage';
-import { CategoryPage, CreateProductPage, SubCategoryPage, ViewProductPage } from '../pages/';
+import { BodegaPage, CategoryPage, CreateProductPage, SubCategoryPage, ViewProductPage } from '../pages/';
 import { ItemOutlet } from '../components';
 
 const AppRoutes = () => {
@@ -23,7 +23,7 @@ const AppRoutes = () => {
                         <Route index element={<CategoryPage />} />
                         <Route path="subcategory" element={<SubCategoryPage />} />
                     </Route>
-                    <Route path="bodega" element={<></>} />
+                    <Route path="bodega" element={<BodegaPage />} />
                     <Route path="cliente" element={<></>} />
                 </Route>
             </Routes>

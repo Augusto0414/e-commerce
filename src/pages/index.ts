@@ -3,3 +3,5 @@ export { default as ViewProductPage } from "./product/ViewProductPage";
 
 export { default as CategoryPage } from "./category/CategoryPage";
 export { default as SubCategoryPage } from "./subcategory/SubCategoryPage";
+
+export { default as BodegaPage } from "./bodega/BodegaPage";

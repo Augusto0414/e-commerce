@@ -1,7 +1,7 @@
 import { ReactNode, useState } from "react";
 import { useSidebar } from "./context/SidebarContext";
 import { NavLink } from "react-router-dom";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronRight } from "lucide-react";
 
 interface SidebarSubItemProps {
     text: string;
@@ -42,7 +42,7 @@ export default function SidebarItem({ icon, text, href, alert = false, subItems 
                     {alert && <div className={`absolute right-2 w-2 h-2 rounded bg-red-500 ${expanded ? "" : "top-2"}`} />}
                     {expanded && subItems.length > 0 && (
                         <div className="ml-auto">
-                            {isOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                            {isOpen ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
                         </div>
                     )}
                     {!expanded && (

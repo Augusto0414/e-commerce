@@ -46,7 +46,7 @@ const DataTable: React.FC<DataTableProps> = ({ columns, data, onEdit, onDelete }
                             >
                                 {onEdit && (
                                     <button
-                                        onClick={() => onEdit(row.ID)}
+                                        onClick={() => onEdit(row.id)}
                                         className="py-2 px-4 mr-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600"
                                     >
                                         Editar
@@ -54,7 +54,7 @@ const DataTable: React.FC<DataTableProps> = ({ columns, data, onEdit, onDelete }
                                 )}
                                 {onDelete && (
                                     <button
-                                        onClick={() => onDelete(row.ID)}
+                                        onClick={() => onDelete(row.id)}
                                         className="py-2 px-4 rounded-lg bg-red-500 text-white hover:bg-red-600"
                                     >
                                         Eliminar
