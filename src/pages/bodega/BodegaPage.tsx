@@ -1,27 +1,17 @@
 import React, { useState } from 'react'
-import { createBodega, getAllBodegas } from '../../api/index';
-import { DataTable, Input, Label, ShowDialog } from '../../components'
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Input, Label } from '../../components';
+import { Plus } from 'lucide-react';
+import BodegaCard from '../../components/card/BodegaCard';
 
 const BodegaPage: React.FC = () => {
     const [dataT, setData] = useState<Array<Record<string, any>>>([]);
-    const [isopenDialog, setIsopenDialog] = useState<boolean>(false);
+    const [isOpen, setIsOpen] = useState<boolean>(false);
 
-    const handleOpenDialog = () => {
-        setIsopenDialog(true);
-    };
-    const handleCloseDialog = () => {
-        setIsopenDialog(false);
-    };
-
-    const columns = ['ID', 'Nombre', 'Fecha', 'Modificacón'];
-
-    const data = [
-        { ID: 1, Nombre: 'Producto 1', Fecha: '$10', Modificacón: 20 },
-        { ID: 2, Nombre: 'Producto 2', Fecha: '$15', Modificacón: 15 },
-        { ID: 3, Nombre: 'Producto 3', Fecha: '$8', Modificacón: 30 },
-    ];
+    const handleToggle = () => {
+        setIsOpen(!isOpen);
+    }
 
     const handleEdit = (id: any) => {
         console.log(`Edit item with ID: ${id}`);
@@ -33,54 +23,146 @@ const BodegaPage: React.FC = () => {
     };
     return (
         <>
-            <header className='flex justify-between px-4 items-center'>
-                <h1 className='text-dark-blue text-2xl'>Bodegas</h1>
-                <div className='flex items-center justify-center'>
-                    <button onClick={() => handleOpenDialog()} className='bg-dark-blue px-4 py-2 mr-4 text-white rounded-lg' >Añadir bodega</button>
+            <header className='flex flex-col sm:flex-row justify-between items-center px-4 py-2 bg-white'>
+                <h1 className='text-dark-blue text-2xl mb-2 sm:mb-0'>Bodegas</h1>
+                <div className='flex items-center space-x-2 w-full sm:w-auto'>
+                    <Input type='search' placeholder='Buscar subcategoría...' />
+                    <button onClick={handleToggle} className='flex items-center bg-dark-blue px-4 py-3 text-white rounded-lg'>
+                        <Plus className="mr-2" size={16} />
+                        Añadir
+                    </button>
                 </div>
             </header>
-            <section className='w-full px-2'>
-                <article className='p-4 '>
-                    <div className='w-1/2 my-4'>
-                        <Input type='search' placeholder='Buscar bodega...' />
-                    </div>
-                    <DataTable columns={columns} data={data} onEdit={handleEdit} onDelete={handleDelete} />
-                </article>
+            <section className='w-full px-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
+                <BodegaCard
+                    id='qws1'
+                    nombre="Bodega Central"
+                    ubicacion="Ciudad de México"
+                    capacidad={1500}
+                    fechaCreacion="2024-01-15"
+                    fechaModificacion="2024-09-01"
+                    onEdit={(id) => handleEdit(id)}
+                    onDelete={(id) => handleDelete(id)}
+                />
+                <BodegaCard
+                    id='qws1'
+                    nombre="Bodega Central"
+                    ubicacion="Ciudad de México"
+                    capacidad={1500}
+                    fechaCreacion="2024-01-15"
+                    fechaModificacion="2024-09-01"
+                    onEdit={(id) => handleEdit(id)}
+                    onDelete={(id) => handleDelete(id)}
+                />
+                <BodegaCard
+                    id='qws1'
+                    nombre="Bodega Central"
+                    ubicacion="Ciudad de México"
+                    capacidad={1500}
+                    fechaCreacion="2024-01-15"
+                    fechaModificacion="2024-09-01"
+                    onEdit={(id) => handleEdit(id)}
+                    onDelete={(id) => handleDelete(id)}
+                />
+                <BodegaCard
+                    id='qws1'
+                    nombre="Bodega Central"
+                    ubicacion="Ciudad de México"
+                    capacidad={1500}
+                    fechaCreacion="2024-01-15"
+                    fechaModificacion="2024-09-01"
+                    onEdit={(id) => handleEdit(id)}
+                    onDelete={(id) => handleDelete(id)}
+                />
+                <BodegaCard
+                    id='qws1'
+                    nombre="Bodega Central"
+                    ubicacion="Ciudad de México"
+                    capacidad={1500}
+                    fechaCreacion="2024-01-15"
+                    fechaModificacion="2024-09-01"
+                    onEdit={(id) => handleEdit(id)}
+                    onDelete={(id) => handleDelete(id)}
+                />
+                <BodegaCard
+                    id='qws1'
+                    nombre="Bodega Central"
+                    ubicacion="Ciudad de México"
+                    capacidad={1500}
+                    fechaCreacion="2024-01-15"
+                    fechaModificacion="2024-09-01"
+                    onEdit={(id) => handleEdit(id)}
+                    onDelete={(id) => handleDelete(id)}
+                />
+                <BodegaCard
+                    id='qws1'
+                    nombre="Bodega Central"
+                    ubicacion="Ciudad de México"
+                    capacidad={1500}
+                    fechaCreacion="2024-01-15"
+                    fechaModificacion="2024-09-01"
+                    onEdit={(id) => handleEdit(id)}
+                    onDelete={(id) => handleDelete(id)}
+                />
+
             </section>
-            <ShowDialog
-                isOpen={isopenDialog}
-                onClose={handleCloseDialog}
-                title='Añadir bodega'
-                children={
-                    <form action=''>
-                        <div className='grid grid-cols-1 gap-4'>
-                            <div className='md:col-span-3 px-2'>
-                                <Label htmlFor="bodega">
-                                    Nombre de la bodega
-                                    <Input type="text" name='bodega' id='bodega' placeholder="Ej: Santana" />
-                                </Label>
-                            </div>
-                            <div className='md:col-span-3 px-2'>
-                                <Label htmlFor="direcion">
-                                    Direcion de la bodega
-                                    <Input type="text" name='direcion' id='direcion' placeholder="Ej: Calle 32 - 23" />
-                                </Label>
-                            </div>
-                            <div className='md:col-span-3 px-2'>
-                                <Label htmlFor="telefono">
-                                    Numero de telefono
-                                    <Input type="text" name='telefono' id='telefono' placeholder="Ej: 3236679323" />
-                                </Label>
-                            </div>
+            <div
+                className={`fixed top-0 right-0 h-full w-80 bg-white shadow-custom transition-transform transform ${isOpen ? 'translate-x-0' : 'translate-x-full'} z-50`}
+                style={{ transition: 'transform 0.3s ease-in-out' }}
+            >
+                <div className='flex items-center justify-end px-4 py-2'>
+                    <button
+                        onClick={handleToggle}
+                        className='text-gray-600 hover:text-blue-500 text-lg'
+                    >
+                        Cerrar
+                    </button>
+                </div>
+                <form action="">
+                    <div className='flex flex-col'>
+                        <div className='p-4 space-y-3'>
+                            <Label htmlFor="nombre" className="block">
+                                Nombre de la bodega
+                                <Input
+                                    type='text'
+                                    id='nombre'
+                                    name='nombre'
+                                    placeholder='Nombre de la Bodega'
+                                    required
+                                />
+                            </Label>
+                            <Label htmlFor="ubicacion" className="block">
+                                Ubicación
+                                <Input
+                                    type='text'
+                                    id='ubicacion'
+                                    name='ubicacion'
+                                    placeholder='Ubicación'
+                                    required
+                                />
+                            </Label>
+                            <Label htmlFor="capacidad" className="block">
+                                Capacidad
+                                <Input
+                                    type='number'
+                                    id='capacidad'
+                                    name='capacidad'
+                                    placeholder='Capacidad'
+                                    required
+                                />
+                            </Label>
                         </div>
-                        <div className='w-full flex justify-center p-2'>
-                            <button type='submit' className='w-full bg-dark-blue px-4 py-4 text-white rounded-lg'>Añadir</button>
+                        <div className='p-4'>
+                            <button type='submit' className='w-full bg-dark-blue px-4 py-2 text-white rounded-lg'>
+                                {isOpen ? 'Actualizar' : 'Añadir'}
+                            </button>
                         </div>
-                    </form>
-                }
-            />
+                    </div>
+                </form>
+            </div>
         </>
     )
 }
 
 export default BodegaPage
+

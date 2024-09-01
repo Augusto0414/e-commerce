@@ -7,3 +7,9 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+.shadow-custom {
+    box-shadow:
+        0 6px 12px rgba(11, 17, 28, 0.3),
+        0 12px 24px rgba(11, 17, 28, 0.2);
+}
