@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
+import { createBodega, getAllBodegas } from '../../api/index';
 import { DataTable, Input, Label, ShowDialog } from '../../components'
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const BodegaPage: React.FC = () => {
     const [dataT, setData] = useState<Array<Record<string, any>>>([]);

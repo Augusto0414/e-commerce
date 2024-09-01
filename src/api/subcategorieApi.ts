@@ -2,9 +2,10 @@ import axios from "axios";
 import api from "./adminApi";
 
 export interface SubCategoriesData {
-  id?: number;
-  categoriaId?: number;
+  id?: string;
   nombre: string;
+  descripcion?: string;
+  categoriaId?: string;
 }
 
 export const createSubCategorie = async (data: SubCategoriesData) => {
@@ -34,6 +35,23 @@ export const filterSubCategories = async (filter: string): Promise<SubCategories
     handleError(error, "Error al filtrar las categorías");
   }
   return [];
+};
+
+export const updateSubcategorie = async (id: string, data: Partial<SubCategoriesData>) => {
+  try {
+    const response = await api.put(`/subcategories/${id}`, data);
+    return response.data;
+  } catch (error) {
+    handleError(error, "Error al actualizar la categoría");
+  }
+};
+
+export const deleteSubcategorie = async (id: string) => {
+  try {
+    await api.delete(`/subcategories/${id}`);
+  } catch (error) {
+    handleError(error, "Error al eliminar la categoría");
+  }
 };
 
 const handleError = (error: any, defaultMessage: string) => {
