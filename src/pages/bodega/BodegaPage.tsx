@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
-import { DataTable, Input, Label, ShowDialog } from '../../components'
+import { Input, Label, ShowDialog } from '../../components'
+import { Plus } from 'lucide-react';
+import CardWareHouse from '../../components/card/CardWareHouse';
 
 const BodegaPage: React.FC = () => {
-    const [dataT, setData] = useState<Array<Record<string, any>>>([]);
+    const [data, setData] = useState<Array<Record<string, any>>>([]);
     const [isopenDialog, setIsopenDialog] = useState<boolean>(false);
 
     const handleOpenDialog = () => {
@@ -11,14 +13,6 @@ const BodegaPage: React.FC = () => {
     const handleCloseDialog = () => {
         setIsopenDialog(false);
     };
-
-    const columns = ['ID', 'Nombre', 'Fecha', 'Modificacón'];
-
-    const data = [
-        { ID: 1, Nombre: 'Producto 1', Fecha: '$10', Modificacón: 20 },
-        { ID: 2, Nombre: 'Producto 2', Fecha: '$15', Modificacón: 15 },
-        { ID: 3, Nombre: 'Producto 3', Fecha: '$8', Modificacón: 30 },
-    ];
 
     const handleEdit = (id: any) => {
         console.log(`Edit item with ID: ${id}`);
@@ -30,20 +24,35 @@ const BodegaPage: React.FC = () => {
     };
     return (
         <>
-            <header className='flex justify-between px-4 items-center'>
-                <h1 className='text-dark-blue text-2xl'>Bodegas</h1>
-                <div className='flex items-center justify-center'>
-                    <button onClick={() => handleOpenDialog()} className='bg-dark-blue px-4 py-2 mr-4 text-white rounded-lg' >Añadir bodega</button>
+            <header className="flex flex-col sm:flex-row justify-between items-center px-4 py-2 bg-white">
+                <h1 className="text-dark-blue text-2xl mb-2 sm:mb-0">Bodegas</h1>
+                <div className="flex items-center space-x-2 w-full sm:w-auto">
+                    <input
+                        type="search"
+                        placeholder="Buscar bodega..."
+                        className="border border-gray-300 rounded-lg px-3 py-2 w-full sm:w-auto"
+                    />
+                    <button
+                        onClick={() => handleOpenDialog()}
+                        className="bg-dark-blue px-4 py-2 text-white rounded-lg flex items-center"
+                    >
+                        <Plus className="mr-2" size={16} />
+                        <span>Añadir</span>
+                    </button>
                 </div>
             </header>
-            <section className='w-full px-2'>
-                <article className='p-4 '>
-                    <div className='w-1/2 my-4'>
-                        <Input type='search' placeholder='Buscar bodega...' />
-                    </div>
-                    <DataTable columns={columns} data={data} onEdit={handleEdit} onDelete={handleDelete} />
-                </article>
+
+            <section className=' flex flex-col sm:flex-row w-1/4 shadow-sm bg-white'>
+                <div className="py-6 px-4">
+                    <CardWareHouse
+                        title="Título de la Card"
+                        description="Descripción de la card aquí."
+                        onEdit={() => handleEdit}
+                        onDelete={() => handleDelete}
+                    />
+                </div>
             </section>
+
             <ShowDialog
                 isOpen={isopenDialog}
                 onClose={handleCloseDialog}

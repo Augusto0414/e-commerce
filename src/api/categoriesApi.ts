@@ -2,8 +2,9 @@ import api from "./adminApi";
 import axios from "axios";
 
 export interface CategoriesData {
-  id?: number;
+  id?: string;
   nombre: string;
+  descripcion?: string;
 }
 
 export const createCategorie = async (data: CategoriesData) => {
@@ -34,7 +35,7 @@ export const filterCategories = async (filter: string): Promise<CategoriesData[]
   return [];
 };
 
-export const updateCategorie = async (id: number, data: CategoriesData) => {
+export const updateCategorie = async (id: string, data: CategoriesData) => {
   try {
     const response = await api.put(`/categories/${id}`, data);
     return response.data;
@@ -43,7 +44,7 @@ export const updateCategorie = async (id: number, data: CategoriesData) => {
   }
 };
 
-export const deleteCategorie = async (id: number) => {
+export const deleteCategorie = async (id: string) => {
   try {
     await api.delete(`/categories/${id}`);
   } catch (error) {
