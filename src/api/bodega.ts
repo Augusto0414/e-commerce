@@ -1,11 +1,13 @@
+import { handleError } from "../helper/handleAxiosError";
 import api from "./adminApi";
-import axios from "axios";
 
 export interface BodegaData {
-  id: string;
+  id?: string;
   nombre: string;
-  ubicaion: string;
+  ubicacion: string;
   capacidad: string;
+  fechaCreacion?: string;
+  fechaModificacion?: string;
 }
 
 export const createBodega = async (data: BodegaData) => {
@@ -27,13 +29,29 @@ export const getAllBodegas = async (): Promise<BodegaData[]> => {
   return [];
 };
 
-const handleError = (error: any, defaultMessage: string) => {
-  if (axios.isAxiosError(error)) {
-    const errorMessage = error.response?.data?.message || defaultMessage;
-    console.error(`Error: ${errorMessage}`);
-    throw new Error(errorMessage);
-  } else {
-    console.error("Error desconocido", error);
-    throw new Error("Ocurrió un error inesperado.");
+export const filterBodegas = async (filter: string): Promise<BodegaData[]> => {
+  try {
+    const response = await api.get("/bodegas/search", { params: { filter } });
+    return response.data;
+  } catch (error) {
+    handleError(error, "Error al filtrar las bodegas");
+  }
+  return [];
+};
+
+export const updateBodega = async (id: string, data: BodegaData): Promise<void> => {
+  try {
+    const response = await api.put(`/bodegas/${id}`, data);
+    return response.data;
+  } catch (error) {
+    handleError(error, "Error al actualizar la bodega");
+  }
+};
+
+export const deleteBodega = async (id: string): Promise<void> => {
+  try {
+    await api.delete(`/bodegas/${id}`);
+  } catch (error) {
+    handleError(error, "Error al eliminar la bodega");
   }
 };

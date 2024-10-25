@@ -43,13 +43,14 @@ const CategoryPage: React.FC = () => {
                 await updateCategorie(editCategoryId, { nombre: newCategoryName, descripcion: newDescription });
                 setEditCategoryId(null);
                 setIsOpenDialog(false);
+                setData(data.map((item) => item.id === editCategoryId ? { ...item, nombre: newCategoryName, descripcion: newDescription } : item));
                 toast.success('Categoría actualizada exitosamente');
             } else {
-                await createCategorie({ nombre: newCategoryName, descripcion: newDescription });
+                const newCategory = await createCategorie({ nombre: newCategoryName, descripcion: newDescription });
+                setData([...data, newCategory]);
                 toast.success('Categoría añadida exitosamente');
             }
             setNewCategoryName('');
-            fetchCategories();
         } catch (err) {
             toast.error('Error al procesar la categoría');
         }
@@ -66,12 +67,11 @@ const CategoryPage: React.FC = () => {
     };
 
     const handleDelete = async (id: string) => {
-        try {
-            await deleteCategorie(id);
+        const daleteCategoryID = data.find((item) => item.id === id);
+        if (daleteCategoryID) {
+            await deleteCategorie(daleteCategoryID.id!);
+            setData((data.filter(element => element.id !== id)));
             toast.success('Categoría eliminada exitosamente');
-            fetchCategories();
-        } catch (err) {
-            toast.error('Error al eliminar categoría');
         }
     };
 

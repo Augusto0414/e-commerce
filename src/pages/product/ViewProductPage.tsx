@@ -1,27 +1,112 @@
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { DataTable, Input } from '../../components';
+import { Input } from '../../components';
+import { getAllProducto, filterProductos, ProductoData, deleteProducto, updateProducto } from "../../api/index";
+import TableView from '../../components/table/TableView';
+import { TableColumn } from 'react-data-table-component';
+import { toast } from 'react-toastify';
+
 
 const ViewProductPage: React.FC = () => {
     const navigate = useNavigate();
-    const [dataT, setData] = useState<Array<Record<string, any>>>([]);
+    const [data, setData] = useState<ProductoData[] | undefined>([]);
+    const [filter, setFilter] = useState('');
 
-    const columns = ['ID', 'Nombre', 'Precio', 'Stock', 'Acciones'];
+    const fetchProducto = useCallback(async () => {
+        try {
+            const productos = filter ? await filterProductos(filter) : await getAllProducto();
+            setData(productos);
+        } catch (error) {
+            toast.error("Error al obtener el producto");
+        }
+    },
+        [filter]
+    )
 
-    const data = [
-        { ID: 1, Nombre: 'Producto 1', Precio: '$10', Stock: 20, Acciones: 'Editar' },
-        { ID: 2, Nombre: 'Producto 2', Precio: '$15', Stock: 15, Acciones: 'Editar' },
-        { ID: 3, Nombre: 'Producto 3', Precio: '$8', Stock: 30, Acciones: 'Editar' },
+    useEffect(() => {
+        fetchProducto();
+    }, [fetchProducto]);
+
+    const columns: TableColumn<Record<string, any>>[] = [
+        {
+            name: 'ID',
+            selector: row => row.id,
+            sortable: true,
+        },
+        {
+            name: 'Nombre',
+            selector: row => row.nombre,
+            sortable: true,
+        },
+        {
+            name: 'Descripción',
+            selector: row => row.descripcion || 'Sin descripción',
+            sortable: true,
+        },
+        {
+            name: 'precio',
+            selector: row => row.precio,
+            sortable: true,
+        },
+        {
+            name: 'Estado',
+            selector: row => row.esActivo ? 'Activo' : 'Inactivo',
+            sortable: true,
+        },
+        {
+            name: 'Categoria',
+            selector: row => row.categoria,
+            sortable: true,
+        },
+        {
+            name: 'Subcategoria',
+            selector: row => row.subcategoria,
+            sortable: true,
+        },
+        {
+            name: 'Creación',
+            selector: row => new Date(row.fechaCreacion).toLocaleDateString('es-ES', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            }),
+            sortable: true,
+        },
+        {
+            name: 'Modificación',
+            selector: row => new Date(row.fechaModificacion).toLocaleDateString('es-ES', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            }),
+            sortable: true,
+        },
+        {
+            name: 'Acciones',
+            cell: (row) => (
+                <>
+                    <button onClick={() => handleEdit(row.id)} className='mr-2 text-blue-500'>Editar</button>
+                    <button onClick={() => handleDelete(row.id)} className='text-red-500'>Eliminar</button>
+                </>
+            ),
+        },
     ];
 
-    const handleEdit = (id: any) => {
-        console.log(`Edit item with ID: ${id}`);
-    };
+    const handleDelete = async (id: string) => {
+        const producto = data?.find((item) => item.id === id)
+        if (producto) {
+            await deleteProducto(producto.id!)
+            setData(data?.filter((item) => item.id !== id))
+            toast.success('Producto eliminado correctamente')
+        }
+    }
+    const handleEdit = async (id: string) => {
+        const producto = data?.find((item) => item.id !== id)
+        if (producto) {
 
-    const handleDelete = (id: any) => {
-        console.log(`Delete item with ID: ${id}`);
-        setData((prevData) => prevData.filter((item) => item.ID !== id));
-    };
+        }
+    }
+    const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => setFilter(e.target.value);
     return (
         <>
             <header className='flex justify-between px-2 items-center'>
@@ -37,9 +122,9 @@ const ViewProductPage: React.FC = () => {
             <section className='w-full px-2'>
                 <article className='p-4 '>
                     <div className='w-1/2 my-4'>
-                        <Input type='search' placeholder='Buscar producto...' />
+                        <Input type='search' placeholder='Buscar producto...' value={filter} onChange={handleFilterChange} />
                     </div>
-                    <DataTable columns={columns} data={data} onEdit={handleEdit} onDelete={handleDelete} />
+                    <TableView data={data ?? []} columns={columns} />
                 </article>
             </section>
         </>

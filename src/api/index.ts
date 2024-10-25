@@ -8,4 +8,7 @@ export {
   deleteSubcategorie,
   updateSubcategorie,
 } from "./subcategorieApi";
-export { createBodega, getAllBodegas } from "./bodega";
+export { createBodega, getAllBodegas, filterBodegas, updateBodega, deleteBodega } from "./bodega";
+export type { BodegaData } from "./bodega";
+export type { ProductoData } from "./producto";
+export { createProducto, deleteProducto, getAllProducto, updateProducto, filterProductos } from "./producto";

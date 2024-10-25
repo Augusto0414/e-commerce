@@ -73,8 +73,8 @@ const SubCategoryPage: React.FC = () => {
     const handleDelete = async (id: string) => {
         try {
             await deleteSubcategorie(id);
+            setData((data.filter(element => element.id !== id)));
             toast.success('Subcategoría eliminada exitosamente');
-            fetchSubcategories();
         } catch (error) {
             toast.error('Error al intentar eliminar este elemento');
         }
@@ -89,9 +89,11 @@ const SubCategoryPage: React.FC = () => {
         try {
             if (editSubcategoryId) {
                 await updateSubcategorie(editSubcategoryId, { categoriaId: selectedCategoryId, nombre: subcategoryName, descripcion: newDescription });
+                setData((data.map(item => item.id === editSubcategoryId ? { ...item, categoriaId: selectedCategoryId, nombre: subcategoryName, descripcion: newDescription } : item)));
                 toast.success('Subcategoría actualizada exitosamente');
             } else {
-                await createSubCategorie({ categoriaId: selectedCategoryId, nombre: subcategoryName, descripcion: newDescription });
+                const newSubcategory = await createSubCategorie({ categoriaId: selectedCategoryId, nombre: subcategoryName, descripcion: newDescription });
+                setData((prevData) => [...prevData, newSubcategory]);
                 toast.success('Subcategoría añadida exitosamente');
             }
             setIsOpenDialog(false);
@@ -99,7 +101,6 @@ const SubCategoryPage: React.FC = () => {
             setSubcategoryName('');
             setSelectedCategoryId('');
             setNewDescription('');
-            fetchSubcategories();
         } catch (error) {
             toast.error('Error al guardar la subcategoría');
         }

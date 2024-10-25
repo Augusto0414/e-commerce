@@ -1,5 +1,5 @@
+import { handleError } from "../helper/handleAxiosError";
 import api from "./adminApi";
-import axios from "axios";
 
 export interface CategoriesData {
   id?: string;
@@ -49,15 +49,5 @@ export const deleteCategorie = async (id: string) => {
     await api.delete(`/categories/${id}`);
   } catch (error) {
     handleError(error, "Error al eliminar la categoría");
-  }
-};
-const handleError = (error: any, defaultMessage: string) => {
-  if (axios.isAxiosError(error)) {
-    const errorMessage = error.response?.data?.message || defaultMessage;
-    console.error(`Error: ${errorMessage}`);
-    throw new Error(errorMessage);
-  } else {
-    console.error("Error desconocido", error);
-    throw new Error("Ocurrió un error inesperado.");
   }
 };

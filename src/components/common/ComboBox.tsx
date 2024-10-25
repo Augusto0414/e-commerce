@@ -6,14 +6,16 @@ interface ComboBoxProps {
     options: { value: string; label: string }[];
     value: string;
     onChange: (event: ChangeEvent<HTMLSelectElement>) => void;
+    disabled?: boolean;
 }
 
-const ComboBox: React.FC<ComboBoxProps> = ({ name, options, value, onChange }) => {
+const ComboBox: React.FC<ComboBoxProps> = ({ name, options, value, onChange, disabled }) => {
     return (
         <select
             name={name}
             value={value}
             onChange={onChange}
+            disabled={disabled}
             className="p-4 text-xs  border border-gray-500 rounded-lg text-gray-900 shadow-sm ring-inset 
             ring-gray-300 focus:ring-1 focus:ring-inset focus:ring-dark-blue 
             sm:text-sm sm:leading-4 w-full"

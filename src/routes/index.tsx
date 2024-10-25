@@ -4,6 +4,7 @@ import Layout from '../components/layout/layout';
 import OrderPage from '../pages/order/OrderPage';
 import { BodegaPage, CategoryPage, CreateProductPage, SubCategoryPage, ViewProductPage } from '../pages/';
 import { ItemOutlet } from '../components';
+import Inventorie from '../pages/inventorie/Inventorie';
 
 const AppRoutes = () => {
     return (
@@ -12,7 +13,7 @@ const AppRoutes = () => {
                 <Route path="/" element={<Layout />} >
                     <Route index element={<Home />} />
                     <Route path="pedido" element={<OrderPage />} />
-                    <Route path="inventario" element={<></>} />
+                    <Route path="inventario" element={<Inventorie />} />
                     <Route path="descuento" element={<></>} />
                     <Route path="producto" element={<ItemOutlet />}>
                         <Route index element={<ViewProductPage />} />

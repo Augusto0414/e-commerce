@@ -1,11 +1,13 @@
-import axios from "axios";
 import api from "./adminApi";
+import { handleError } from "../helper/handleAxiosError";
+import { CategoriesData } from "./categoriesApi";
 
-export interface SubCategoriesData {
+export interface SubCategoriesData extends CategoriesData {
   id?: string;
   nombre: string;
   descripcion?: string;
   categoriaId?: string;
+  categoria?: CategoriesData;
 }
 
 export const createSubCategorie = async (data: SubCategoriesData) => {
@@ -51,16 +53,5 @@ export const deleteSubcategorie = async (id: string) => {
     await api.delete(`/subcategories/${id}`);
   } catch (error) {
     handleError(error, "Error al eliminar la categoría");
-  }
-};
-
-const handleError = (error: any, defaultMessage: string) => {
-  if (axios.isAxiosError(error)) {
-    const errorMessage = error.response?.data?.message || defaultMessage;
-    console.error(`Error: ${errorMessage}`);
-    throw new Error(errorMessage);
-  } else {
-    console.error("Error desconocido", error);
-    throw new Error("Ocurrió un error inesperado.");
   }
 };
